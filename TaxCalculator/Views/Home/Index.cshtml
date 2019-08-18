@@ -1,0 +1,69 @@
+﻿@using TaxCalculator.Controllers
+@model HomePageViewModel
+@{
+    ViewData["Title"] = "Personal Tax Calculator";
+}
+
+<div class="row">
+    <h1>Personal Tax Calculator</h1>
+    <form asp-action="AddRecord" method="post" class="panel" >
+        <div class="form-group row">     
+            <div class="form-group col-md-6">
+                <label asp-for="tax.PersonName" class=""></label>
+                <input type="text" name="PersonName" class="form-control" />
+                <span asp-validation-for="tax.PersonName"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label asp-for="tax.AnnualIncome"></label>            
+                <input type="text" name="AnnualIncome" class="form-control" />
+                <span asp-validation-for="tax.AnnualIncome"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label asp-for="tax.PostalCode"></label>
+                <input type="text" name="PostalCode" class="form-control" />
+                <span asp-validation-for="tax.PostalCode"></span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <input type="submit" value="Calculate and Save" class="btn btn-primary"/>
+        </div>
+    </form>
+
+</div>
+
+<div class="row">
+    <table class="table table-responsive table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Annual Income</th>
+                <th scope="col">Postal Code</th>
+                <th scope="col">Calculated Tax</th>
+                <th scope="col">Recorded Date</th>
+                <th scope="col">Delete Record</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var taxEntity in Model.Taxes)
+            {
+                <tr>
+                    <th scope="row">@taxEntity.id</th>
+                    <td>@taxEntity.PersonName</td>
+                    <td>@taxEntity.AnnualIncome</td>
+                    <td>@taxEntity.PostalCode</td>
+                    <td>@taxEntity.CalculatedTax</td>
+                    <td>@taxEntity.RecordDate</td>
+                    <td>@Html.ActionLink("Delete Record", "DeleteRecord", new {id=taxEntity.id})</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
